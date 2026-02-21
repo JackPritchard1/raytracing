@@ -4,10 +4,10 @@ use std::fmt;
 use std::ops::Mul;
 
 #[derive(Debug, Copy, Clone, PartialEq, Add, Sub, Mul, Div, Neg, PartialOrd)]
-pub(crate) struct Vec3 {
-    x: f64,
-    y: f64,
-    z: f64
+pub struct Vec3 {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64
 }
 
 impl Vec3 {
@@ -34,11 +34,12 @@ impl Vec3 {
         (self.x*self.x + self.y*self.y + self.z*self.z).sqrt()
     }
 
-    pub fn normalize(&mut self) {
+    pub fn normalize(&mut self) -> Self{
         let len = self.len();
-        self.x /= len;
-        self.y /= len;
-        self.z /= len;
+        let x = self.x / len;
+        let y = self.y / len;
+        let z = self.z / len;
+        Vec3::new(x, y, z)
     }
 
     pub fn map(self, f: fn(f64) -> f64) -> Self{

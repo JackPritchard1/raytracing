@@ -18,7 +18,7 @@ impl Ray {
     }
 
     pub fn colour(&self) -> Colour {
-        v!(0.0,1.0,0.0)
+        blended_sky(self.direction)
     }
 }
 
@@ -26,6 +26,14 @@ impl fmt::Display for Ray {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{} + t{} ", self.origin, self.direction)
     }
+}
+
+fn blended_sky(mut v: Vec3) -> Colour {
+    let blue = v!(0.5, 0.7, 1.0);
+    let white = v!(1.0, 1.0, 1.0);
+    let v_norm = v.normalize();
+    let t = (v_norm.y + 1.0)/ 2.0;
+    white * (1.0 - t) + blue * t
 }
 
 #[cfg(test)]
