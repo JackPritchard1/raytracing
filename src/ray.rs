@@ -1,5 +1,6 @@
 use std::fmt;
 use crate::vector::*;
+use crate::v;
 
 #[derive(Debug, Clone)]
 pub struct Ray {
@@ -12,8 +13,12 @@ impl Ray {
         Ray { origin, direction }
     }
 
-    pub fn at(&self, t: f32) -> Point {
+    pub fn at(&self, t: f64) -> Point {
         self.origin + self.direction * t
+    }
+
+    pub fn colour(&self) -> Colour {
+        v!(0.0,1.0,0.0)
     }
 }
 

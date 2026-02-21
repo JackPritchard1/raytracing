@@ -5,17 +5,17 @@ use std::ops::Mul;
 
 #[derive(Debug, Copy, Clone, PartialEq, Add, Sub, Mul, Div, Neg, PartialOrd)]
 pub(crate) struct Vec3 {
-    x: f32,
-    y: f32,
-    z: f32
+    x: f64,
+    y: f64,
+    z: f64
 }
 
 impl Vec3 {
-    pub fn new(x: f32, y: f32, z: f32) -> Self {
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self { x, y, z }
     }
 
-    pub fn dot(&self, other: &Self) -> f32 {
+    pub fn dot(&self, other: &Self) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
@@ -30,7 +30,7 @@ impl Vec3 {
         Self::new(0.0, 0.0, 0.0)
     }
 
-    pub fn len(&self) -> f32 {
+    pub fn len(&self) -> f64 {
         (self.x*self.x + self.y*self.y + self.z*self.z).sqrt()
     }
 
@@ -41,7 +41,7 @@ impl Vec3 {
         self.z /= len;
     }
 
-    pub fn map(self, f: fn(f32) -> f32) -> Self{
+    pub fn map(self, f: fn(f64) -> f64) -> Self{
         let x = f(self.x);
         let y = f(self.y);
         let z = f(self.z);
@@ -54,7 +54,7 @@ impl Vec3 {
 
 }
 
-pub type Color = Vec3;
+pub type Colour = Vec3;
 pub type Point = Vec3;
 
 impl From<Vec3> for Rgb<u8>{
@@ -63,7 +63,7 @@ impl From<Vec3> for Rgb<u8>{
     }
 }
 
-impl Mul<Vec3> for f32{
+impl Mul<Vec3> for f64{
     type Output = Vec3;
 
     fn mul(self, v: Vec3) -> Vec3 {
@@ -126,7 +126,7 @@ mod tests {
 
     #[test]
     fn test_color(){
-        let c = Color::new(0.5, 0.5, 0.0);
+        let c = Colour::new(0.5, 0.5, 0.0);
         let rgb = Rgb([127, 127, 0]);
         let colour: Rgb<u8> = c.into();
         assert_eq!(colour, rgb);
@@ -149,7 +149,7 @@ mod tests {
     #[test]
     fn test_vec_multiplication(){
         let a = Vec3::new(1.0, 2.0, 3.0);
-        let b: f32 = 3.0;
+        let b: f64 = 3.0;
         assert_eq!(a*b, Vec3::new(3.0, 6.0, 9.0));
         assert_eq!(b*a, Vec3::new(3.0, 6.0, 9.0));
     }
@@ -157,7 +157,7 @@ mod tests {
     #[test]
     fn test_vec_division(){
         let a = Vec3::new(1.0, 2.0, 3.0);
-        let b: f32 = 2.0;
+        let b: f64 = 2.0;
         assert_eq!(a/b, Vec3::new(0.5, 1.0, 1.5));
     }
 
